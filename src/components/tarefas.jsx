@@ -27,8 +27,10 @@ class Tarefas extends Component {
 
     adicionaTarefa = (evento) => {
         const novaTarefa = document.getElementById('novaTarefa').value;
-        this.state.tarefas.push(novaTarefa);
-        console.log(this.state.tarefas);
+        const newVector = [...this.state.tarefas, novaTarefa];
+        this.setState({
+            tarefas: newVector
+        });
         evento.preventDefault(); //evita a pagina de ser recarregada
     };
     
