@@ -5,7 +5,7 @@ class Tarefas extends Component {
         tarefas: [
             'Declarar IRPF',
             'Estudar React',
-            'Levar o carro para revisao'
+            'Levar o carro para revisão'
         ]
     };
 
@@ -15,9 +15,22 @@ class Tarefas extends Component {
                 <h2>Tarefas pendentes</h2>
                 <p>{this.tarefasPendentes()}</p>
                 {this.listaDeTarefas()}
+                <form className="form-inline mt-4" onSubmit={this.adicionaTarefa}>
+                    <div className="input-group">
+                        <input id="novaTarefa" type="text" className="form-control" />
+                        <button className="btn btn-secondary">+</button>
+                    </div>
+                </form>
             </div>
         );
     }
+
+    adicionaTarefa = (evento) => {
+        const novaTarefa = document.getElementById('novaTarefa').value;
+        this.state.tarefas.push(novaTarefa);
+        console.log(this.state.tarefas);
+        evento.preventDefault(); //evita a pagina de ser recarregada
+    };
     
     tarefasPendentes() {
         const {tarefas} = this.state;
