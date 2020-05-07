@@ -3,10 +3,8 @@ import './tarefas.css'
 class Tarefas extends Component {
     state = {
         tarefas: [
-            'Declarar IRPF',
-            'Estudar React',
-            'Levar o carro para revisão'
-        ]
+            'Declarar IRPF', 'Estudar React', 'Levar o carro para revisão'],
+        novaTarefa: ''
     };
 
     render() {
@@ -17,7 +15,9 @@ class Tarefas extends Component {
                 {this.listaDeTarefas()}
                 <form className="form-inline mt-4" onSubmit={this.adicionaTarefa}>
                     <div className="input-group">
-                        <input id="novaTarefa" type="text" className="form-control" />
+                        <input type="text" className="form-control" 
+                            value={this.state.novaTarefa} 
+                            onChange={this.trataNovaTarefa}/>
                         <button className="btn btn-secondary">+</button>
                     </div>
                 </form>
@@ -25,11 +25,15 @@ class Tarefas extends Component {
         );
     }
 
+    trataNovaTarefa = (evento) => {
+        this.setState({ novaTarefa: evento.target.value });
+    }
+
     adicionaTarefa = (evento) => {
-        const novaTarefa = document.getElementById('novaTarefa').value;
-        const newVector = [...this.state.tarefas, novaTarefa];
+        const newVector = [...this.state.tarefas, this.state.novaTarefa];
         this.setState({
-            tarefas: newVector
+            tarefas: newVector,
+            novaTarefa: ''
         });
         evento.preventDefault(); //evita a pagina de ser recarregada
     };
