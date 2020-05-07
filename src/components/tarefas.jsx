@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import './tarefas.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import './tarefas.css';
+
 class Tarefas extends Component {
     state = {
         tarefas: [
@@ -18,7 +21,9 @@ class Tarefas extends Component {
                         <input type="text" className="form-control" 
                             value={this.state.novaTarefa} 
                             onChange={this.trataNovaTarefa}/>
-                        <button className="btn btn-secondary">+</button>
+                        <span className="input-group-append">
+                            <button className="btn btn-secondary"><FontAwesomeIcon icon={faPlus}/></button>
+                        </span>
                     </div>
                 </form>
             </div>
