@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Tarefa from './tarefa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import './tarefas.css';
@@ -60,9 +61,7 @@ class Tarefas extends Component {
         return (
             <ul className="list-group mt-4">
                 {this.state.tarefas.map((t,i) => (
-                    <li className="list-group-item" key={i}>
-                        {t}
-                    </li>
+                    <Tarefa key={i}/>
                 ))}
             </ul>
         )
