@@ -7,7 +7,8 @@ import './tarefas.css';
 class Tarefas extends Component {
     state = {
         tarefas: [
-            'Declarar IRPF', 'Estudar React', 'Levar o carro para revisão'],
+            'Declarar IRPF', 'Estudar React', 'Levar o carro para revisão'
+        ],
         novaTarefa: ''
     };
 
@@ -58,13 +59,16 @@ class Tarefas extends Component {
     }
 
     listaDeTarefas() {
+        const {tarefas} = this.state;
         return (
-            <ul className="list-group mt-4">
-                {this.state.tarefas.map((t,i) => (
-                    <Tarefa key={i} descricao={t}/>
-                ))}
-            </ul>
-        )
+            (tarefas.length > 0) && (
+                <ul className="list-group mt-4">
+                    {this.state.tarefas.map((t,i) => (
+                        <Tarefa key={i} descricao={t}/>
+                    ))}
+                </ul>
+            )
+        );
     }
 }
 export default Tarefas;
