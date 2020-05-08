@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 class Tarefa extends Component {
     state = { 
-        descricao: 'Tarefa'
-     }
+        descricao: this.props.descricao
+     };
 
     render() { 
         return ( 

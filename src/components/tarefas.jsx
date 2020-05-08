@@ -61,7 +61,7 @@ class Tarefas extends Component {
         return (
             <ul className="list-group mt-4">
                 {this.state.tarefas.map((t,i) => (
-                    <Tarefa key={i}/>
+                    <Tarefa key={i} descricao={t}/>
                 ))}
             </ul>
         )
