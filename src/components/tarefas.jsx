@@ -64,11 +64,22 @@ class Tarefas extends Component {
             (tarefas.length > 0) && (
                 <ul className="list-group mt-4">
                     {this.state.tarefas.map((t,i) => (
-                        <Tarefa key={i} descricao={t}/>
+                        <Tarefa key={i} descricao={t}
+                        onAltera={this.alteraTarefa}
+                        />
                     ))}
                 </ul>
             )
         );
     }
+
+    alteraTarefa = (t, d) => {
+        const i = this.state.tarefas.indexOf(t);
+        const novaLista = [...this.state.tarefas];
+        novaLista[i] = d;
+        this.setState({
+            tarefas: novaLista
+        });
+    };
 }
 export default Tarefas;

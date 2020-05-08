@@ -25,7 +25,8 @@ class Tarefa extends Component {
                     />;
         } else {
             return ( 
-                <div>{this.state.descricao}
+                <div className="align-middle">
+                    {this.props.descricao}
                     <span className="btn-group float-right">
                         <button className="btn btn-info btn-sm" onClick={this.edita}>
                             <FontAwesomeIcon icon={faEdit}/>
@@ -52,6 +53,7 @@ class Tarefa extends Component {
         this.setState({
             altera: false,
         });
+        this.props.onAltera(this.props.descricao, this.state.descricao)
     };
 
     teclaEnter = (e) => {
