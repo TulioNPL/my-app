@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEdit} from '@fortawesome/free-solid-svg-icons'
+import {faTrash} from '@fortawesome/free-solid-svg-icons'
 
 class Tarefa extends Component {
     state = { 
@@ -31,7 +32,10 @@ class Tarefa extends Component {
                         <button className="btn btn-info btn-sm" onClick={this.edita}>
                             <FontAwesomeIcon icon={faEdit}/>
                         </button>
-                        </span>
+                        <button className="btn btn-warning btn-sm" onClick={this.apaga}>
+                            <FontAwesomeIcon icon={faTrash}/>
+                        </button>
+                    </span>
                 </div>
             )
         }
@@ -58,7 +62,11 @@ class Tarefa extends Component {
 
     teclaEnter = (e) => {
         if(e.key === 'Enter') this.confirma();
-    }
+    };
+
+    apaga = () => {
+        this.props.onApaga(this.props.descricao);
+    };
 }
  
 export default Tarefa;
