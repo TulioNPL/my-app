@@ -67,6 +67,23 @@ class Tarefa extends Component {
     apaga = () => {
         this.props.onApaga(this.props.descricao);
     };
+
+    constructor(props) {
+        super(props);
+        console.log('Construtor: ', this.props.descricao);
+    }
+
+    componentDidMount() {
+        console.log('Component did mount: ',this.props.descricao);
+    }
+    
+      componentDidUpdate() {
+        console.log('Component did update: ',this.props.descricao);
+    }
+    
+      componentWillUnmount() {
+        console.log('Component will unmount: ',this.props.descricao);
+    }
 }
  
 export default Tarefa;

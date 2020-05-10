@@ -46,7 +46,7 @@ class Tarefas extends Component {
         <ul className="list-group mt-4">
           {tarefas.map((t, i) => (
             <Tarefa
-              key={i}
+              key={t}
               descricao={t}
               onAltera={this.props.onAltera}
               onApaga={this.props.onApaga}
