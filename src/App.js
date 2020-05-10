@@ -6,9 +6,13 @@ import Tarefas from './components/tarefas';
 class App extends Component {
 
   state = {
-    tarefas: [
-      'Declarar IRPF', 'Estudar React', 'Levar o carro para revisão'
-    ],
+    tarefas: [],
+  }
+
+  constructor(props) {
+    super(props);
+    const t = JSON.parse(localStorage.getItem('tarefas'));
+    if(t) this.state.tarefas = t;
   }
 
   render() {
@@ -47,6 +51,18 @@ class App extends Component {
         tarefas: this.state.tarefas.filter((tarefa) => tarefa !== t),
     });
   };
+
+  componentDidMount() {
+      console.log('Component did mount: ',this.props.descricao);
+  }
+
+    componentDidUpdate() {
+      localStorage.setItem('tarefas', JSON.stringify(this.state.tarefas));
+  }
+
+    componentWillUnmount() {
+      console.log('Component will unmount: ',this.props.descricao);
+  }
 }
 
 export default App;
