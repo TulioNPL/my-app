@@ -1,61 +1,55 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Tarefa from './tarefa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-class Tarefas extends Component {
-  state = {
-    novaTarefa: '',
-  };
+function Tarefas (props) {
 
-  render() {
-    return (
-      <div>
-        <h2>Tarefas</h2>
-        {this.listaDeTarefas()}
-        <form
-          className="form-inline mt-4"
-          onSubmit={(e) => {
-            this.props.onAdiciona(this.state.novaTarefa);
-            this.setState({ novaTarefa: '' });
-            e.preventDefault();
-          }}
-        >
-          <div className="input-group">
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.novaTarefa}
-              onChange={(e) => this.setState({ novaTarefa: e.target.value })}
-            />
-            <span className="input-group-append">
-              <button className="btn btn-secondary" type="submit">
-                <FontAwesomeIcon icon={faPlus} />
-              </button>
-            </span>
-          </div>
-        </form>
-      </div>
-    );
-  }
+  const [novaTarefa, setNovaTarefa] = useState('');
 
-  listaDeTarefas() {
-    const { tarefas } = this.props;
-    return (
-      tarefas.length > 0 && (
+  return (
+    <div>
+      <h2>Tarefas</h2>
+
+      {props.tarefas.length > 0 && (
         <ul className="list-group mt-4">
-          {tarefas.map((t, i) => (
+          {props.tarefas.map((t, i) => (
             <Tarefa
               key={t}
               descricao={t}
-              onAltera={this.props.onAltera}
-              onApaga={this.props.onApaga}
+              onAltera={props.onAltera}
+              onApaga={props.onApaga}
             />
           ))}
         </ul>
-      )
-    );
-  }
+      )}
+
+      <form
+        className="form-inline mt-4"
+        onSubmit={(e) => {
+          props.onAdiciona(novaTarefa);
+          setNovaTarefa('');
+          e.preventDefault();
+        }}
+      >
+        <div className="input-group">
+          <input
+            type="text"
+            className="form-control"
+            value={novaTarefa}
+            onChange={(e) => setNovaTarefa(e.target.value)}
+          />
+          <span className="input-group-append">
+            <button className="btn btn-secondary" type="submit" disabled={novaTarefa.length === 0}>
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+          </span>
+        </div>
+      </form>
+    </div>
+  );
+
+    
 }
 
 export default Tarefas;

@@ -1,68 +1,39 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { useState, useEffect } from 'react';
 import NavBar from './components/navbar';
 import Tarefas from './components/tarefas';
 
-class App extends Component {
+function App (props) {
+  let t = JSON.parse(localStorage.getItem('tarefas'));
+  if(!t) t=[];
+  const [tarefas, setTarefas] = useState(t);
+  
+  //funcoes de tratamento de eventos
+  const adicionaTarefa = (t) => setTarefas([...tarefas, t]);
 
-  state = {
-    tarefas: [],
-  }
-
-  constructor(props) {
-    super(props);
-    const t = JSON.parse(localStorage.getItem('tarefas'));
-    if(t) this.state.tarefas = t;
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        <NavBar pendentes={this.state.tarefas.length}/>
-        <div className="container">      
-          <Tarefas
-            tarefas = {this.state.tarefas}
-            onAdiciona = {this.adicionaTarefa}
-            onAltera = {this.alteraTarefa}
-            onApaga = {this.apagaTarefa}
-          />
-        </div>
-      </React.Fragment>
-    );  
-  }
-
-  adicionaTarefa = (t) => {
-    this.setState({
-        tarefas: [...this.state.tarefas, t],
-    });
-  };
-
-  alteraTarefa = (t, d) => {
-    const i = this.state.tarefas.indexOf(t);
-    const novaLista = [...this.state.tarefas];
+  const alteraTarefa = (t, d) => {
+    const i = tarefas.indexOf(t);
+    const novaLista = [...tarefas];
     novaLista[i] = d;
-    this.setState({
-        tarefas: novaLista
-    });
+    setTarefas(novaLista);
   };
 
-  apagaTarefa = (t) => {
-    this.setState({
-        tarefas: this.state.tarefas.filter((tarefa) => tarefa !== t),
-    });
-  };
+  const apagaTarefa = (t) => setTarefas(tarefas.filter((tarefa) => tarefa !== t));
 
-  componentDidMount() {
-      console.log('Component did mount: ',this.props.descricao);
-  }
+  useEffect(() => localStorage.setItem('tarefas', JSON.stringify(tarefas)));
 
-    componentDidUpdate() {
-      localStorage.setItem('tarefas', JSON.stringify(this.state.tarefas));
-  }
-
-    componentWillUnmount() {
-      console.log('Component will unmount: ',this.props.descricao);
-  }
+  return (
+    <React.Fragment>
+      <NavBar pendentes={tarefas.length}/>
+      <div className="container">      
+        <Tarefas
+          tarefas = {tarefas}
+          onAdiciona = {adicionaTarefa}
+          onAltera = {alteraTarefa}
+          onApaga = {apagaTarefa}
+        />
+      </div>
+    </React.Fragment>
+  );  
 }
 
 export default App;

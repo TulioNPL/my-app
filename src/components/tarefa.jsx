@@ -1,72 +1,50 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faEdit} from '@fortawesome/free-solid-svg-icons'
-import {faTrash} from '@fortawesome/free-solid-svg-icons'
+import {faEdit, faTrash} from '@fortawesome/free-solid-svg-icons'
 
-class Tarefa extends Component {
-    state = { 
-        descricao: this.props.descricao,
-        altera: false
-     };
+function Tarefa(props) {
 
-    render() { 
-        return ( 
-            <li className="list-group-item">{this.conteudo()}</li>
-         );
+    const [descricao, setDescricao] = useState(props.descricao);
+    const [altera, setAltera] = useState(false);
+
+    useEffect(() => {
+        setDescricao(props.descricao);
+    }, [props.descricao]);
+
+    //funcoes para tratamento de eventos
+    const confirma = () => {
+        setAltera(false);
+        props.onAltera(props.descricao, descricao);
     }
 
-    conteudo() {
-        if(this.state.altera) { 
-            return <input className="form-control" type="text"
-                        value={this.state.descricao}
-                        onChange={this.alteraTarefa}
-                        onBlur={this.confirma}
-                        autoFocus
-                        onKeyPress={this.teclaEnter}
-                    />;
-        } else {
-            return ( 
+    const teclaEnter = (e) => {
+        if(e.key ==='Enter') confirma();
+    }
+    
+    return ( 
+        <li className="list-group-item">
+            { altera ? (
+                <input className="form-control" type="text"
+                    value={descricao}
+                    onChange={(e) => setDescricao(e.target.value)}
+                    onBlur={confirma}
+                    autoFocus
+                    onKeyPress={teclaEnter}
+                />
+            ):(
                 <div className="align-middle">
-                    {this.props.descricao}
+                    {props.descricao}
                     <span className="btn-group float-right">
-                        <button className="btn btn-info btn-sm" onClick={this.edita}>
+                        <button className="btn btn-info btn-sm" onClick={()=>setAltera(true)}>
                             <FontAwesomeIcon icon={faEdit}/>
                         </button>
-                        <button className="btn btn-warning btn-sm" onClick={this.apaga}>
+                        <button className="btn btn-warning btn-sm" onClick={() => props.onApaga(props.descricao)}>
                             <FontAwesomeIcon icon={faTrash}/>
                         </button>
                     </span>
                 </div>
-            )
-        }
-    }
-
-    edita = () => {
-        this.setState({
-            altera:true,
-        });
-    };
-
-    alteraTarefa = (e) => {
-        this.setState({
-            descricao: e.target.value,
-        });
-    };
-
-    confirma = () => {
-        this.setState({
-            altera: false,
-        });
-        this.props.onAltera(this.props.descricao, this.state.descricao)
-    };
-
-    teclaEnter = (e) => {
-        if(e.key === 'Enter') this.confirma();
-    };
-
-    apaga = () => {
-        this.props.onApaga(this.props.descricao);
-    };
+            )}
+        </li>
+    );
 }
- 
 export default Tarefa;
